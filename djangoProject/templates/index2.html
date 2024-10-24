@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-12344
-</body>
-</html>
+{% extends "index.html" %}
+{% block title %} Home -{{block.super}}{% endblock %}
+
+{% block header %}
+    {{block.super}}
+    <h2> Welcome to the 2 Page</h2>
+{% endblock %}
+{% block content %}
+    <h2> Latest Posts</h2>
+    <ul>
+        <li> Post 1</li>
+         <li> Post 2</li>
+         <li> Post 3</li>
+    </ul>
+{% endblock %}
+ {% block footer %}
+ <p> Thanks for visiting!</p>
+    {{block.super}}
+{% endblock %}

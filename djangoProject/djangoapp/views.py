@@ -6,5 +6,5 @@ def index(request):
     return render(request, 'index.html')
 
 
-class index2(TemplateView):
-    template_name = 'index2.html'
+def base(request):
+    return render(request, 'index2.html')
