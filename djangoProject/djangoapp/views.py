@@ -1,10 +1,33 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.core.paginator import Paginator
+from .models import Post
 
 
-def index(request):
-    return render(request, 'index.html')
+def post_list(request):
+    posts = Post.objects.all()
 
+    # создаем пагинатор
+    paginator = Paginator(posts, 3)  # 10 постов на странице
 
-def base(request):
-    return render(request, 'index2.html')
+    # получаем номер страницы, на которую переходит пользователь
+    page_number = request.GET.get('page')
+
+    # получаем посты для текущей страницы
+    page_posts = paginator.get_page(page_number)
+    return render(request, 'index.html', {'page_posts': page_posts})
+#
+#
+# def index(request):
+#     # Authors=Author.objects.all()
+#     #
+#     # data={
+#     #     "Authors":Authors,
+#     # }
+#     return render(request, 'index.html')
+#
+#
+# def test(request):
+#     return render(request, 'test.html')
+#
+# def base(request):
+#     return render(request, 'index2.html')
