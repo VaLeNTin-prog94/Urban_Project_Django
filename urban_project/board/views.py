@@ -35,6 +35,18 @@ def advertisement_detail(request, pk):
     return render(request, 'board/advertisement_detail.html', {'advertisement': advertisement})
 
 @login_required
+def edit_advertisement(request,pk):
+    advertisement = Advertisement.objects.get(pk=pk)
+    if request.method == "POST":
+        form = AdvertisementForm(request.POST, instance = advertisement)
+        if form.is_valid():
+            advertisement.save()
+            return redirect('board:advertisement_list')
+    else:
+        form = AdvertisementForm(instance = advertisement)
+    return render(request,'board/edit_advertisement.html',{'form': form, 'advertisement': advertisement})
+
+@login_required
 def add_advertisement(request):
     if request.method == "POST":
         form = AdvertisementForm(request.POST)
@@ -46,3 +58,4 @@ def add_advertisement(request):
     else:
         form = AdvertisementForm()
     return render(request, 'board/add_advertisement.html', {'form': form})
+

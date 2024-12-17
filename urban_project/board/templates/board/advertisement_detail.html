@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <h1>{{ advertisement.title }}</h1>
 <p>{{ advertisement.content }}</p>
+
+<a href="{% url 'board:edit_advertisement' pk=advertisement.pk %}"><button>Edit Advertisement</button></a>
+{% endif %}
+
+
 {% endblock %}

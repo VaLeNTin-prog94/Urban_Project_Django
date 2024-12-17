@@ -4,6 +4,7 @@
 <h1>Advertisements</h1>
 {% if user.is_authenticated %}
     <a href="{% url 'board:add_advertisement' %}"><button>Add Advertisement</button></a>
+
 {% endif %}
 <ul>
   {% for advertisement in advertisements %}
