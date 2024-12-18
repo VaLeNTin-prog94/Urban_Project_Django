@@ -5,7 +5,12 @@
 <h1>{{ advertisement.title }}</h1>
 <p>{{ advertisement.content }}</p>
 
-<a href="{% url 'board:edit_advertisement' pk=advertisement.pk %}"><button>Edit Advertisement</button></a>
+<a href="{% url 'board:edit_advertisement' pk=advertisement.pk %}">
+    <button>Edit Advertisement</button>
+</a>
+<a href="{% url 'board:delete_advertisement' pk=advertisement.pk %}">
+    <button>Delete Advertisement</button>
+</a>
 {% endif %}
 
 
