@@ -78,7 +78,7 @@ def edit_advertisement(request, pk):
     '''
     advertisement = Advertisement.objects.get(pk=pk)
     if request.method == "POST":
-        form = AdvertisementForm(request.POST, instance=advertisement)
+        form = AdvertisementForm(request.POST, request.FILES, instance=advertisement)
         if form.is_valid():
             advertisement.save()
             return redirect('board:advertisement_list')
@@ -95,7 +95,7 @@ def add_advertisement(request):
     :return: Добавляет объявление и выводит список представлений
     '''
     if request.method == "POST":
-        form = AdvertisementForm(request.POST)
+        form = AdvertisementForm(request.POST, request.FILES)
         if form.is_valid():
             advertisement = form.save(commit=False)
             advertisement.author = request.user

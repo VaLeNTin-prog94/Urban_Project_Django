@@ -4,7 +4,10 @@
 {% if user.is_authenticated %}
 <h1>{{ advertisement.title }}</h1>
 <p>{{ advertisement.content }}</p>
-
+{% if advertisement.image %}
+<p><img class="img-article-left" src="{{advertisement.image.url}}"</p>
+{% endif %}
+<p></p>
 <a href="{% url 'board:edit_advertisement' pk=advertisement.pk %}">
     <button>Edit Advertisement</button>
 </a>

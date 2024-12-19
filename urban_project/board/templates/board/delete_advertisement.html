@@ -7,16 +7,23 @@
 <p>Вы уверены, что хотите удалить объявление "
 <h1>{{ advertisement.title }}?</h1>
 </p>
+{% if advertisement.image %}
+<p><img class="img-article-left" src="{{advertisement.image.url}}"</p>
+{% endif %}
+<p></p>
 <form method="post">
     {% csrf_token %}
     <button type="submit">Удалить</button>
     <button><a href="{% url 'board:advertisement_list' %}">Отмена</a></button>
 
 </form>
+
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <li
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </li>
     {% endfor %}
 </ul>
 {% endif %}
