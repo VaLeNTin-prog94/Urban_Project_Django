@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from board.models import Advertisement
 from board.forms import AdvertisementForm
 from django.contrib.auth.decorators import login_required
@@ -120,3 +120,25 @@ def delete_advertisement(request, pk):
         messages.success(request, 'Объявление успешно удалено.')
         return redirect('board:advertisement_list')
     return render(request, 'board/delete_advertisement.html', {'advertisement': advertisement})
+
+
+@login_required
+def like_ad(request, pk):
+    advertisement = Advertisement.objects.get(pk=pk)
+    if request.method == "POST":
+        advertisement.likes += 1
+        advertisement.save()
+        return redirect('board:advertisement_detail', pk=advertisement.pk)
+
+
+@login_required
+def dislike_ad(request, pk):
+    advertisement = Advertisement.objects.get(pk=pk)
+    if request.method == "POST":
+        advertisement.dislikes += 1
+        advertisement.save()
+        if request.method == "POST":
+            advertisement.likes += 1
+            advertisement.save()
+            return redirect('board:advertisement_detail', pk=advertisement.pk)
+

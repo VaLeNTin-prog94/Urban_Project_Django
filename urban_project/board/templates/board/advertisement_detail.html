@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.is_authenticated %}
+
 <h1>{{ advertisement.title }}</h1>
 <p>{{ advertisement.content }}</p>
 {% if advertisement.image %}
@@ -10,6 +10,21 @@
 <p></p>
 <p> Автор объявления :<h2> {{advertisement.author}}</h2></p>
 <p></p>
+<p>Лайки: {{ advertisement.likes }} | Дизлайки: {{ advertisement.dislikes }}</p>
+
+{% if user.is_authenticated %}
+<form action="{% url 'board:like_ad' advertisement.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Like</button>
+</form>
+
+<form action="{% url 'board:dislike_ad' advertisement.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Dislike</button>
+</form>
+
+<a href="{% url 'board:advertisement_list' %}">  <button>Вернуться обратно к представлениям</button></a>
+<p> </p>
 <a href="{% url 'board:edit_advertisement' pk=advertisement.pk %}">
     <button>Edit Advertisement</button>
 </a>
