@@ -4,7 +4,7 @@ from board.forms import AdvertisementForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
-
+from django.core.paginator import Paginator
 
 def logout_view(request):
     '''
@@ -137,8 +137,18 @@ def dislike_ad(request, pk):
     if request.method == "POST":
         advertisement.dislikes += 1
         advertisement.save()
-        if request.method == "POST":
-            advertisement.likes += 1
-            advertisement.save()
-            return redirect('board:advertisement_detail', pk=advertisement.pk)
+        return redirect('board:advertisement_detail', pk=advertisement.pk)
 
+def advertisement_list(request):
+    '''
+    Представление для вывода всех объявлений с пагинацией
+    :param request: запрос
+    :return: Возвращает страницу с всеми объявлениями
+    '''
+    advertisements = Advertisement.objects.all()
+    paginator = Paginator(advertisements, 3)  # Показывать 10 объявлений на странице
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'board/advertisement_list.html', {'page_obj': page_obj})
